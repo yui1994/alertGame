@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本小知識挑戰</title>
+    <!-- sweetalert2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/9.9.0/sweetalert2.all.js"
+        integrity="sha512-x24UyRDKCjcnqwrSaxX0BFvzgb/f3WvMEP9CAuIr2GphwDhz8hS9RGxTRJTl998B6GaVLUuaXURjGXyECJEh0w=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css.css">
+
+    <style>
+        .swal2-popup {
+            background: #eee;
+        }
+
+        .swal2-content {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .swal2-styled.swal2-confirm {
+            background-color: rgb(100, 175, 237);
+            color: rgb(42, 88, 126);
+            font-weight: 600;
+        }
+
+        .swal2-styled.swal2-cancel {
+            background-color: rgb(81, 197, 139);
+            color: rgb(44, 116, 92);
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div id="btnSt" onclick="start()"><b>開始挑戰</b></div>
+    </div>
+
+
+    <!-- <img src="https://fakeimg.pl/150x150/#999"> -->
+    <script>
+        //題目(文字)
+        var
+            ch0 = {
+                text: '好久沒去日本啦，關於日本的小知識還記得多少呢？來挑戰一下吧',
+                confirmButtonText: '接受挑戰',
+                imageUrl: './img/00_03.png',
+                imageHeight: 200,
+                // comfirmButtonColor: '#3085d6',
+            },
+
+            q_1 = {
+                title: '',
+                text: '日本現在的年號是？(2021年)',
+                imageUrl: './img/q1_03.png',
+                imageHeight: 200,
+                confirmButtonText: '令和', //對
+                cancelButtonText: '德仁', //錯
+                showCancelButton: true, //讓cancel按鈕顯示在畫面上
+                allowOutsideClick: false,
+                // comfirmButtonColor: '#3085d6',
+                // cancelButtonColor: '#d33'
+            },
+
+            q_1n = {
+                // title: '錯!',
+                text: '日本現在的年號為令和，德仁則現在日本天皇的名字',
+                imageUrl: './img/no.png',
+                imageHeight: 150,
+                // icon: 'error'
+            },
+            q_1y = {
+                title: '正確',
+                text: '「令和」出自於《萬葉集》中的 「初春令月，氣淑風和」，帶有懷抱希望、期許有美好未來的意思',
+                imageUrl: './img/a1_01.jpg', //令和大叔的圖
+                imageHeight: 200,
+            },
+
+            //日本東北三大祭典 仙台七夕祭(8/6~8/8)/青森睡魔祭(8/2~8/7)/秋田竿燈祭(8/3~8/6)
+            q_2 = {
+                title: '',
+                text: '日本的夏季有許多熱鬧的祭典，哪一個選項是日本東北三大祭典之一呢？',
+                imageUrl: './img/q2_01.png',
+                imageHeight: 200,
+                confirmButtonText: '秩父夜祭', //錯
+                cancelButtonText: '仙台七夕祭', //對
+                showCancelButton: true, //讓cancel按鈕顯示在畫面上
+                allowOutsideClick: false,
+                // comfirmButtonColor: '#3085d6',
+                // cancelButtonColor: '#d33'
+            }
+
+        q_2n = {
+            // title: '錯!',
+            text: '日本東北三大祭典為仙台七夕祭、青森睡魔祭、秋田竿燈祭。舉辦秩父夜祭的琦玉縣，不屬於日本東北地區。',
+            imageUrl: './img/no.png',
+            imageHeight: 150,
+            // icon: 'error'
+        }
+        q_2y = {
+            title: '正確',
+            text: '仙台七夕祭於每年的8/6~8/8舉辦',
+            imageUrl: './img/a2_02.JPG',
+            imageHeight: 200
+        }
+
+        //去日本神社或寺廟參拜的時候，很多人都順便抽籤看看自己的運勢，請問在哪一個地方比較容易抽到凶籤 (淺草寺VS明治神宮)
+        //淺草寺 https://www.gltjp.com/zh-hant/article/item/20011/
+        //明治神宮的籤詩沒有吉凶 https://www.gltjp.com/zh-hant/article/item/20011/
+        q_3 = {
+            title: '',
+            text: '去日本神社或寺廟參拜的時候，很多人都順便抽籤看看自己的運勢，如果不想抽到凶籤的話，在哪裡抽籤比較好呢？',
+            imageUrl: './img/q3_02.png',
+            imageHeight: 200,
+            confirmButtonText: '淺草寺', //錯
+            cancelButtonText: '明治神宮', //對
+            showCancelButton: true, //讓cancel按鈕顯示在畫面上
+            allowOutsideClick: false,
+            // comfirmButtonColor: '#3085d6',
+            // cancelButtonColor: '#d33'
+        }
+
+        q_3n = {
+            // title: '錯!',
+            text: '淺草寺有著容易抽到凶籤的都市傳說，原因是現在許多日本寺廟會調整吉凶籤的比例，降低抽到凶籤的機率，而淺草寺依然維持原本的比例',
+            imageUrl: './img/no.png',
+            imageHeight: 150,
+            // icon: 'error'
+        }
+        q_3y = {
+            title: '正確',
+            text: '明治神宮的神籤沒有寫上吉凶，只有短歌(日本的詩)',
+            imageUrl: './img/a3_02.jpg',
+            imageHeight: 200,
+        }
+
+        //日本有很多知名的遊樂園， 其中樂高樂園所在的名古屋位於哪一個縣 愛知VSギフ
+        q_4 = {
+            title: '',
+            text: '日本有很多知名的遊樂園， 其中名古屋的樂高樂園位於哪一個縣？',
+            imageUrl: './img/q4_01.png',
+            imageHeight: 200,
+            confirmButtonText: '愛知縣', //藍
+            cancelButtonText: '岐阜縣', //紅
+            showCancelButton: true, //讓cancel按鈕顯示在畫面上
+            allowOutsideClick: false,
+            // comfirmButtonColor: '#3085d6',
+            // cancelButtonColor: '#d33'
+        }
+
+        q_4n = {
+            // title: '錯!',
+            text: '名古屋市位於愛知縣。而岐阜縣則是世界遺產白川鄉、電影《你的名字》的原型飛驒古川等景點的所在地',
+            imageUrl: './img/no.png',
+            imageHeight: 150,
+            // icon: 'error'
+        }
+        q_4y = {
+            title: '正確',
+            text: '除了樂高樂園，名古屋還有名古屋城、大須觀音、熱田神宮等景點',
+            imageUrl: './img/a4_01.jpg',
+            imageHeight: 200,
+        }
+
+        // 哪一個是日本的三大麵食(烏龍麵/拉麵/蕎麥) 烏龍麵VS強棒麵 
+        q_5 = {
+            title: '',
+            text: '提到日本美食時總少不了拉麵，哪個選項和拉麵一樣也是日本三大麵食呢？',
+            imageUrl: './img/q5_01.png',
+            imageHeight: 200,
+            confirmButtonText: '強棒麵', //藍
+            cancelButtonText: '烏龍麵', //紅
+            showCancelButton: true, //讓cancel按鈕顯示在畫面上
+            allowOutsideClick: false,
+            // comfirmButtonColor: '#3085d6',
+            // cancelButtonColor: '#d33'
+        }
+
+        //強棒麵 https://tw.wamazing.com/media/article/a-126/
+        q_5n = {
+            // title: '錯!',
+            text: '強棒麵是長崎有名的麵食。明治時代當地人為了招待在日本的清朝留學生而製作出來的料理',
+            imageUrl: './img/no.png',
+            imageHeight: 150,
+            // icon: 'error'
+        }
+        q_5y = {
+            title: '正確',
+            text: '拉麵、烏龍麵和蕎麥麵被稱為日本三大麵食',
+            imageUrl: './img/a5_01.jpg',
+            imageHeight: 150,
+        }
+
+
+        //題目(函式)
+        // if (result.dismiss !== 'cancel') // 選confirmButtonText
+        // if (result.dismiss === 'cancel') // 選cancelButtonText
+
+        //start
+        function start() {
+            Swal.fire(ch0).then(qOne)
+        }
+
+        //Q1
+        function qOne() {
+            Swal.fire(q_1)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_1n).then(q1y0)
+                    }
+                    else {
+                        Swal.fire(q_1y).then(q1y1)
+                    }
+                })
+        }
+
+        //Q1Y1->Q2
+        function q1y1() {
+            Swal.fire(q_2)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_2y)
+                            .then(q2y2)//Q2Y2
+                    } else {
+                        Swal.fire(q_2n)
+                            .then(q2y1)//Q2Y1
+                    }
+                })
+        }
+
+        //Q1Y0->Q2
+        function q1y0() {
+            Swal.fire(q_2)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_2y)
+                            .then(q2y1)//Q2Y1
+                    } else {
+                        Swal.fire(q_2n)
+                            .then(q2y0)//Q2Y0
+                    }
+                })
+        }
+
+        //Q2Y2->Q3
+        function q2y2() {
+            Swal.fire(q_3)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_3y)
+                            .then(q3y3)//Q3Y3
+                    } else {
+                        Swal.fire(q_3n)
+                            .then(q3y2)//Q3Y2
+                    }
+                })
+        }
+
+        //Q2Y1->Q3
+        function q2y1() {
+            Swal.fire(q_3)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_3y)
+                            .then(q3y2) //Q3Y2
+                    } else {
+                        Swal.fire(q_3n)
+                            .then(q3y1) //Q3Y1
+                    }
+                })
+        }
+
+        //Q2Y0->Q3
+        function q2y0() {
+            Swal.fire(q_3)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_3y)
+                            .then(q3y1) //Q3Y1
+                    } else {
+                        Swal.fire(q_3n)
+                            .then(q3y0) //Q3Y0
+                    }
+                })
+        }
+
+        //Q3Y3->Q4
+        function q3y3() {
+            Swal.fire(q_4)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_4n)
+                            .then(q4y3)//Q4Y3
+                    } else {
+                        Swal.fire(q_4y)
+                            .then(q4y4)//Q4Y4
+                    }
+                })
+        }
+
+        //Q3Y2->Q4
+        function q3y2() {
+            Swal.fire(q_4)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_4n)
+                            .then(q4y2)//Q4Y2
+                    } else {
+                        Swal.fire(q_4y)
+                            .then(q4y3) //Q4Y3
+                    }
+                })
+        }
+
+        //Q3Y1->Q4
+        function q3y1() {
+            Swal.fire(q_4)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_4n)
+                            .then(q4y1)//Q4Y1
+                    } else {
+                        Swal.fire(q_4y)
+                            .then(q4y2) //Q4Y2
+                    }
+                })
+        }
+
+        //Q3Y0->Q4
+        function q3y0() {
+            Swal.fire(q_4)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_4n)
+                            .then(q4y0)//Q4Y0
+                    } else {
+                        Swal.fire(q_4y)
+                            .then(q4y1) //Q4Y1
+                    }
+                })
+        }
+
+        //Q4Y4->Q5
+        function q4y4() {
+            Swal.fire(q_5)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_5y)
+                            .then(sc5)//全對
+                    } else {
+                        Swal.fire(q_5n)
+                            .then(sc4)// 錯1題
+                    }
+                })
+        }
+
+        //Q4Y3->Q5
+        function q4y3() {
+            Swal.fire(q_5)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_5y)
+                            .then(sc4)
+                    } else {
+                        Swal.fire(q_5n)
+                            .then(sc3)
+                    }
+                })
+        }
+
+        //Q4Y2->Q5
+        function q4y2() {
+            Swal.fire(q_5)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_5y)
+                            .then(sc3)
+                    } else {
+                        Swal.fire(q_5n)
+                            .then(sc2)
+                    }
+                })
+        }
+
+        //Q4Y1->Q5
+        function q4y1() {
+            Swal.fire(q_5)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_5y)
+                            .then(sc2)
+                    } else {
+                        Swal.fire(q_5n)
+                            .then(sc1)
+                    }
+                })
+        }
+
+        //Q4Y0->Q5
+        function q4y0() {
+            Swal.fire(q_5)
+                .then(function (result) {
+                    if (result.dismiss === 'cancel') {
+                        Swal.fire(q_5y)
+                            .then(sc1)
+                    } else {
+                        Swal.fire(q_5n)
+                            .then(sc0)
+                    }
+                })
+        }
+
+        //score100 (五題全對)
+        function sc5() {
+            Swal.fire({
+                title: '日本知識小達人就是你',
+                text: '成績：100分',
+                confirmButtonText: '邀請朋友來挑戰',
+                imageUrl: './img/sc5_01.png',
+                imageHeight: 200,
+                // comfirmButtonColor: '#3085d6',
+            })
+        }
+
+        //score80
+        function sc4() {
+            Swal.fire({
+                title: '只要有心你一定可以成為日本通',
+                text: '成績：80分',
+                confirmButtonText: '邀請朋友來挑戰',
+                imageUrl: './img/sc3_01.png',
+                imageHeight: 200,
+                // comfirmButtonColor: '#3085d6',
+            })
+        }
+
+        //score60
+        function sc3() {
+            Swal.fire({
+                title: '你已經走在日本知識王的道路上了，加油！',
+                text: '成績：60分',
+                confirmButtonText: '邀請朋友來挑戰',
+                imageUrl: './img/sc4_01.png',
+                imageHeight: 200,
+                // comfirmButtonColor: '#3085d6',
+            })
+        }
+
+        //score40
+        function sc2() {
+            Swal.fire({
+                title: '太久沒有去日本所以變得陌生了嗎QQ',
+                text: '成績：40分',
+                confirmButtonText: '邀請朋友來挑戰',
+                imageUrl: './img/sc2_01.png',
+                imageHeight: 200,
+                // comfirmButtonColor: '#3085d6',
+            })
+        }
+
+        //score20
+        function sc1() {
+            Swal.fire({
+                title: '看來你對日本還有點不熟欸',
+                text: '成績：20分',
+                confirmButtonText: '邀請朋友來挑戰',
+                imageUrl: './img/sc1_01.png',
+                imageHeight: 200,
+                // comfirmButtonColor: '#3085d6',
+            })
+        }
+
+        //score0
+        function sc0() {
+            Swal.fire({
+                title: '別傷心！現在開始了解日本也不遲',
+                text: '成績：0分',
+                confirmButtonText: '邀請朋友來挑戰',
+                imageUrl: './img/sc0_01.png',
+                imageHeight: 200,
+                // comfirmButtonColor: '#3085d6',
+            })
+        }
+
+
+
+
+
+    </script>
+</body>
+
+</html>
